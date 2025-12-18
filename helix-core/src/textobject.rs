@@ -250,6 +250,7 @@ fn textobject_pair_surround_impl(
             TextObject::Movement => unreachable!(),
         })
         .unwrap_or(range)
+        .with_direction(Direction::Backward)
 }
 
 /// Transform the given range to select text objects based on tree-sitter.
@@ -287,7 +288,7 @@ pub fn textobject_treesitter(
         let start_char = slice.byte_to_char(start_byte);
         let end_char = slice.byte_to_char(end_byte);
 
-        Some(Range::new(start_char, end_char))
+        Some(Range::new(start_char, end_char).with_direction(Direction::Backward))
     };
     get_range().unwrap_or(range)
 }
